@@ -32,7 +32,7 @@ public class CFGExtractor {
 		g.addNode(entry);
 		g.addNode(exit);
 		for(Node n: g.getNodes()){
-			if(n.toString().equals("Exit") || n.toString().equals("Entry"))
+			if(n.toString().equals("\"Exit\"") || n.toString().equals("\"Entry\""))
 				continue;
 			if(g.getSuccessors(n).isEmpty())
 				g.addEdge(n, exit);
