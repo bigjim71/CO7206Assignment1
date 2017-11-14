@@ -1,13 +1,16 @@
-package dependenceAnalysis.analysis;
+package dependenceAnalysis.analysis.assignment1.solution;
 
 import br.usp.each.saeg.asm.defuse.Variable;
+import dependenceAnalysis.analysis.*;
 import dependenceAnalysis.util.cfg.Graph;
 import dependenceAnalysis.util.cfg.Node;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.analysis.AnalyzerException;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by neilwalkinshaw on 19/10/2017.

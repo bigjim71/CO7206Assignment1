@@ -12,6 +12,8 @@ import org.objectweb.asm.tree.MethodNode;
 import java.io.InputStream;
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
+
 /**
  * Created by neilwalkinshaw on 19/10/2017.
  */
@@ -35,6 +37,10 @@ public class PostDominatorTreeTest {
         //Run the post dominator tree generation code.
         PostDominatorTree pdt = new PostDominatorTree(cn,target);
         Graph tree = pdt.computeResult();
+
+        for(Node n :pdt.controlFlowGraph.getNodes()){
+            assertTrue(tree.getNodes().contains(n));
+        }
 
         //Print results for inspection (best visualised using GraphViz).
         System.out.println("ORIGINAL CFG: \n"+pdt.getControlFlowGraph()
