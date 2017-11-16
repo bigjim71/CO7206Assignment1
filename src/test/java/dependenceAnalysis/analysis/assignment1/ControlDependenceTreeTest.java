@@ -70,16 +70,16 @@ public class ControlDependenceTreeTest {
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
         System.out.println("CD: Precision - "+precision+", Recall - "+recall);
-        writeToFile(submission,solution);
+        writeToFile(submission,"submission.dot");
+        writeToFile(solution,"solution.dot");
     }
 
-    private void writeToFile(Graph submission, Graph solution) {
+    private void writeToFile(Graph submission, String name) {
         BufferedWriter writer = null;
         try
         {
-            writer = new BufferedWriter( new FileWriter("check.dot"));
+            writer = new BufferedWriter( new FileWriter(name));
             writer.write( submission.toString());
-            writer.write(solution.toString());
 
         }
         catch ( IOException e)
