@@ -68,9 +68,9 @@ public class ControlDependenceTreeTestCollectionSort {
         }
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
-        System.out.println("CD: Precision - "+precision+", Recall - "+recall);
-        writeToFile(submission,"submission.dot");
-        writeToFile(solution,"solution.dot");
+        System.out.println("Collections CD: Precision - "+precision+", Recall - "+recall);
+        writeToFile(submission,"collectionsSubmissionCDT.dot");
+        writeToFile(solution,"collectionsSolutionCDT.dot");
     }
 
     private void writeToFile(Graph submission, String name) {

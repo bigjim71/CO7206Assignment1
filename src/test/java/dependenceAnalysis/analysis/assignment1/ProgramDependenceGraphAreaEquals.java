@@ -76,9 +76,9 @@ public class ProgramDependenceGraphAreaEquals {
         }
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
-        System.out.println("PDG: Precision - "+precision+", Recall - "+recall);
-        writeToFile(submission,"submissionPDG.dot");
-        writeToFile(solution,"solutionPDG.dot");
+        System.out.println("Area PDG: Precision - "+precision+", Recall - "+recall);
+        writeToFile(submission,"AreaSubmissionPDG.dot");
+        writeToFile(solution,"AreaSolutionPDG.dot");
     }
 
     @Test

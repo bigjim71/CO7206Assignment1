@@ -76,9 +76,9 @@ public class ProgrmDependenceGraphTestCollectionsSort {
         }
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
-        System.out.println("PDG: Precision - "+precision+", Recall - "+recall);
-        writeToFile(submission,"submissionPDG.dot");
-        writeToFile(solution,"solutionPDG.dot");
+        System.out.println("Collections PDG: Precision - "+precision+", Recall - "+recall);
+        writeToFile(submission,"collectionsSubmissionPDG.dot");
+        writeToFile(solution,"collectionsSolutionPDG.dot");
     }
 
     @Test
@@ -109,7 +109,7 @@ public class ProgrmDependenceGraphTestCollectionsSort {
         }
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
-        System.out.println("Slices: Precision - "+precision+", Recall - "+recall+", Exceptions: "+exceptions);
+        System.out.println("Collections Slices: Precision - "+precision+", Recall - "+recall+", Exceptions: "+exceptions);
     }
 
     private void writeToFile(Graph submission, String name) {

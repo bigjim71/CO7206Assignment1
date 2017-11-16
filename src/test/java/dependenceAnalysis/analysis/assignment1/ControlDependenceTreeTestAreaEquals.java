@@ -69,9 +69,9 @@ public class ControlDependenceTreeTestAreaEquals {
         }
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
-        System.out.println("CD: Precision - "+precision+", Recall - "+recall);
-        writeToFile(submission,"submission.dot");
-        writeToFile(solution,"solution.dot");
+        System.out.println("Area CDT: Precision - "+precision+", Recall - "+recall);
+        writeToFile(submission,"AreaSubmissionCDT.dot");
+        writeToFile(solution,"AreaSolutionCDT.dot");
     }
 
     private void writeToFile(Graph submission, String name) {
