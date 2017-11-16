@@ -1,10 +1,9 @@
 package dependenceAnalysis.analysis.assignment1;
 
-import dependenceAnalysis.analysis.ProgramDependenceGraph;
+import dependenceAnalysis.analysis.ControlDependenceTree;
 import dependenceAnalysis.util.cfg.CFGExtractor;
 import dependenceAnalysis.util.cfg.Graph;
 import dependenceAnalysis.util.cfg.Node;
-import org.junit.Before;
 import org.junit.Test;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
@@ -22,13 +21,10 @@ import java.util.List;
 /**
  * Created by neilwalkinshaw on 13/11/2017.
  */
-public class ProgrmDependenceGraphTest {
-    Graph submission,solution;
-    ProgramDependenceGraph pdg;
-    dependenceAnalysis.analysis.assignment1.solution.ProgramDependenceGraph pdgSol;
+public class ControlDependenceTreeTestAreaEquals {
 
-    @Before
-    public void setup()throws IOException {
+    @Test
+    public void testAreaEquals() throws IOException {
         //Pick suitable ClassNode and MethodNode as test subjects.
         ClassNode cn = new ClassNode(Opcodes.ASM4);
         InputStream in=CFGExtractor.class.getResourceAsStream("/java/awt/geom/Area.class");
@@ -42,15 +38,12 @@ public class ProgrmDependenceGraphTest {
         }
 
         //Run the post dominator tree generation code.
-        pdg = new ProgramDependenceGraph(cn,target);
-        submission = pdg.computeResult();
-        pdgSol = new dependenceAnalysis.analysis.assignment1.solution.ProgramDependenceGraph(cn,target);
-        pdgSol.setControlFlowGraph(pdg.getControlFlowGraph());
-        solution = pdgSol.computeResult();
-    }
+        ControlDependenceTree cdt = new ControlDependenceTree(cn,target);
+        Graph submission = cdt.computeResult();
 
-    @Test
-    public void testAreaEquals() {
+        dependenceAnalysis.analysis.assignment1.solution.ControlDependenceTree cdtSol = new dependenceAnalysis.analysis.assignment1.solution.ControlDependenceTree(cn,target);
+        cdtSol.setControlFlowGraph(cdt.getControlFlowGraph());
+        Graph solution = cdtSol.computeResult();
         double tp = 0D;
         double fp = 0D;
         double fn = 0D;
@@ -76,40 +69,9 @@ public class ProgrmDependenceGraphTest {
         }
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
-        System.out.println("PDG: Precision - "+precision+", Recall - "+recall);
-        writeToFile(submission,"submissionPDG.dot");
-        writeToFile(solution,"solutionPDG.dot");
-    }
-
-    @Test
-    public void testSlice(){
-        double tp = 0D;
-        double fp = 0D;
-        double fn = 0D;
-        double exceptions = 0D;
-        for(Node n : solution.getNodes()){
-            Collection<Node> slice = pdgSol.backwardSlice(n);
-            Collection<Node> sliceSub = new HashSet<Node>();
-            if(!submission.getNodes().contains(n)) {
-                try {
-                    sliceSub = pdg.backwardSlice(n);
-                }
-                catch(Exception e){
-                    exceptions++;
-                }
-            }
-            Collection<Node> intersection = new HashSet<Node>();
-            intersection.addAll(slice);
-            intersection.retainAll(sliceSub);
-            tp = tp + intersection.size();
-            sliceSub.removeAll(slice);
-            fp = fp + sliceSub.size();
-            slice.removeAll(sliceSub);
-            fn = fn + slice.size();
-        }
-        double precision = tp / (tp + fp);
-        double recall = tp / (tp + fn);
-        System.out.println("Slices: Precision - "+precision+", Recall - "+recall+", Exceptions: "+exceptions);
+        System.out.println("CD: Precision - "+precision+", Recall - "+recall);
+        writeToFile(submission,"submission.dot");
+        writeToFile(solution,"solution.dot");
     }
 
     private void writeToFile(Graph submission, String name) {
