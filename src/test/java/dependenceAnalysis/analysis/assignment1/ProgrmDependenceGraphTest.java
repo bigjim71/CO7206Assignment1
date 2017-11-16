@@ -86,11 +86,17 @@ public class ProgrmDependenceGraphTest {
         double tp = 0D;
         double fp = 0D;
         double fn = 0D;
+        double exceptions = 0D;
         for(Node n : solution.getNodes()){
             Collection<Node> slice = pdgSol.backwardSlice(n);
             Collection<Node> sliceSub = new HashSet<Node>();
             if(!submission.getNodes().contains(n)) {
-                sliceSub = pdg.backwardSlice(n);
+                try {
+                    sliceSub = pdg.backwardSlice(n);
+                }
+                catch(Exception e){
+                    exceptions++;
+                }
             }
             Collection<Node> intersection = new HashSet<Node>();
             intersection.addAll(slice);
@@ -103,7 +109,7 @@ public class ProgrmDependenceGraphTest {
         }
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
-        System.out.println("Slices: Precision - "+precision+", Recall - "+recall);
+        System.out.println("Slices: Precision - "+precision+", Recall - "+recall+", Exceptions: "+exceptions);
     }
 
     private void writeToFile(Graph submission, String name) {

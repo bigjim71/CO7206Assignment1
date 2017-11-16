@@ -71,6 +71,7 @@ public class ProgramDependenceGraph extends Analysis {
         try {
             //Iterate through all of the cfg instructions
             for(Node n : controlFlowGraph.getNodes()) {
+                dataDependencies.addNode(n);
                 //For each instruction...
                 Collection<Node> defs = new HashSet<Node>();
                 //... define a set (defs) that define variables that are used at this node.
@@ -87,7 +88,6 @@ public class ProgramDependenceGraph extends Analysis {
                 for (Node def : defs) {
                     if (def.equals(n))
                         continue;
-                    dataDependencies.addNode(n);
                     dataDependencies.addNode(def);
                     dataDependencies.addEdge(def, n);
                 }
