@@ -10,6 +10,8 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
@@ -68,6 +70,32 @@ public class ControlDependenceTreeTest {
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
         System.out.println("CD: Precision - "+precision+", Recall - "+recall);
+        writeToFile(submission,solution);
+    }
+
+    private void writeToFile(Graph submission, Graph solution) {
+        BufferedWriter writer = null;
+        try
+        {
+            writer = new BufferedWriter( new FileWriter("check.dot"));
+            writer.write( submission.toString());
+            writer.write(solution.toString());
+
+        }
+        catch ( IOException e)
+        {
+        }
+        finally
+        {
+            try
+            {
+                if ( writer != null)
+                    writer.close( );
+            }
+            catch ( IOException e)
+            {
+            }
+        }
     }
 
 }
