@@ -88,7 +88,10 @@ public class ProgrmDependenceGraphTest {
         double fn = 0D;
         for(Node n : solution.getNodes()){
             Collection<Node> slice = pdgSol.backwardSlice(n);
-            Collection<Node> sliceSub = pdg.backwardSlice(n);
+            Collection<Node> sliceSub = new HashSet<Node>();
+            if(!submission.getNodes().contains(n)) {
+                sliceSub = pdg.backwardSlice(n);
+            }
             Collection<Node> intersection = new HashSet<Node>();
             intersection.addAll(slice);
             intersection.retainAll(sliceSub);
