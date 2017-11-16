@@ -15,8 +15,6 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 
-import static junit.framework.TestCase.assertTrue;
-
 /**
  * Created by neilwalkinshaw on 13/11/2017.
  */
@@ -43,13 +41,26 @@ public class ControlDependenceTreeTest {
         dependenceAnalysis.analysis.assignment1.solution.ControlDependenceTree cdtSol = new dependenceAnalysis.analysis.assignment1.solution.ControlDependenceTree(cn,target);
         cdtSol.setControlFlowGraph(cdt.getControlFlowGraph());
         Graph solution = cdtSol.computeResult();
-
+        double tp = 0D;
+        double fp = 0D;
+        double fn = 0D;
         for(Node n : solution.getNodes()){
             Collection<Node> solSuccs = solution.getSuccessors(n);
             Collection<Node> subSuccs = submission.getSuccessors(n);
-            assertTrue(solSuccs.containsAll(subSuccs));
-            assertTrue(subSuccs.containsAll(solSuccs));
+            for(Node s : solSuccs){
+                if(subSuccs.contains(s)) {
+                    tp++;
+                }
+                else{
+                    fn++;
+                }
+            }
+            subSuccs.removeAll(solSuccs);
+            fp = fp + subSuccs.size();
         }
+        double precision = tp / (tp + fp);
+        double recall = tp / (tp + fn);
+        System.out.println("CD: Precision - "+precision+", Recall - "+recall);
     }
 
 }
