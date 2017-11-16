@@ -13,6 +13,7 @@ import org.objectweb.asm.tree.MethodNode;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -46,7 +47,13 @@ public class ControlDependenceTreeTest {
         double fn = 0D;
         for(Node n : solution.getNodes()){
             Collection<Node> solSuccs = solution.getSuccessors(n);
-            Collection<Node> subSuccs = submission.getSuccessors(n);
+            Collection<Node> subSuccs = null;
+            if(submission.getNodes().contains(n)){
+                subSuccs = submission.getSuccessors(n);
+            }
+            else {
+                subSuccs = new HashSet<Node>();
+            }
             for(Node s : solSuccs){
                 if(subSuccs.contains(s)) {
                     tp++;
