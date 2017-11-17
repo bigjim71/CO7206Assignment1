@@ -120,7 +120,7 @@ public class ProgramDependenceGraphAreaEquals {
         double exceptions = 0D;
         Node criterion = null;
         for(Node n : solution.getNodes()) {
-            if (n.toString().equals("IReturn29")) {
+            if (n.toString().equals("\"IRETURN29\"")) {
                 criterion = n;
             }
         }
