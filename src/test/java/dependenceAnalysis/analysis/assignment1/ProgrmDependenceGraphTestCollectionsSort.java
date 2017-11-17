@@ -82,7 +82,7 @@ public class ProgrmDependenceGraphTestCollectionsSort {
     }
 
     @Test
-    public void testSlice(){
+    public void testAllSlices(){
         double tp = 0D;
         double fp = 0D;
         double fn = 0D;

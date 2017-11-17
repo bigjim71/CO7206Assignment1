@@ -82,7 +82,7 @@ public class ProgramDependenceGraphAreaEquals {
     }
 
     @Test
-    public void testSlice(){
+    public void testAllSlices(){
         double tp = 0D;
         double fp = 0D;
         double fn = 0D;
@@ -110,6 +110,55 @@ public class ProgramDependenceGraphAreaEquals {
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
         System.out.println("Slices: Precision - "+precision+", Recall - "+recall+", Exceptions: "+exceptions);
+    }
+
+    @Test
+    public void testBigSlice(){
+        double tp = 0D;
+        double fp = 0D;
+        double fn = 0D;
+        double exceptions = 0D;
+        Node criterion = null;
+        for(Node n : solution.getNodes()) {
+            if (n.toString().equals("IReturn29")) {
+                criterion = n;
+            }
+        }
+        Collection<Node> slice = pdgSol.backwardSlice(criterion);
+        Collection<Node> sliceSub = new HashSet<Node>();
+        if(submission.getNodes().contains(criterion)) {
+            try {
+                sliceSub = pdg.backwardSlice(criterion);
+            }
+            catch(Exception e){
+                exceptions++;
+            }
+        }
+        Collection<Node> intersection = new HashSet<Node>();
+        intersection.addAll(slice);
+        intersection.retainAll(sliceSub);
+        tp = tp + intersection.size();
+        sliceSub.removeAll(slice);
+        fp = fp + sliceSub.size();
+        slice.removeAll(sliceSub);
+        fn = fn + slice.size();
+
+        double precision = tp / (tp + fp);
+        double recall = tp / (tp + fn);
+        System.out.println("Big slice: Precision - "+precision+", Recall - "+recall+", Exceptions: "+exceptions);
+        if(precision < 1D || recall < 1D){
+            System.out.println("Correct solution contained: ");
+            for(Node sol : slice){
+                System.out.print(sol+", ");
+            }
+            System.out.println();
+
+            System.out.println("Your solution contained: ");
+            for(Node sol : sliceSub){
+                System.out.print(sol+", ");
+            }
+            System.out.println();
+        }
     }
 
     @Test
