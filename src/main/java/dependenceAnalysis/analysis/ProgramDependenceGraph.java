@@ -149,7 +149,9 @@ public class ProgramDependenceGraph extends Analysis {
     public Set<Node> backwardSlice(Node node){
         if(combined == null)
             this.computeResult();
-        return transitivePredecessors(node,new HashSet<Node>());
+        HashSet<Node> slice = new HashSet<Node>();
+        slice.add(node);
+        return transitivePredecessors(node,slice);
     }
 
     private Set<Node> transitivePredecessors(Node m, Set<Node> done){
