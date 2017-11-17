@@ -158,7 +158,7 @@ public class ProgramDependenceGraphAreaEquals {
             System.out.println();
 
             System.out.println("Your solution contained: ");
-            for(Node sol : sliceSub){
+            for(Node sol : sliceOnly){
                 System.out.print(sol+", ");
             }
             System.out.println();
