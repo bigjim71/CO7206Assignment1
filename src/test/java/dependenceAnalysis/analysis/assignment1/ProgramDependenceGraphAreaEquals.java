@@ -99,12 +99,14 @@ public class ProgramDependenceGraphAreaEquals {
                 }
             }
             Collection<Node> intersection = new HashSet<Node>();
+            Collection<Node> sliceOnly = new HashSet<Node>();
+            sliceOnly.addAll(sliceSub);
             intersection.addAll(slice);
             intersection.retainAll(sliceSub);
             tp = tp + intersection.size();
             sliceSub.removeAll(slice);
             fp = fp + sliceSub.size();
-            slice.removeAll(sliceSub);
+            slice.removeAll(sliceOnly);
             fn = fn + slice.size();
         }
         double precision = tp / (tp + fp);
@@ -135,12 +137,14 @@ public class ProgramDependenceGraphAreaEquals {
             }
         }
         Collection<Node> intersection = new HashSet<Node>();
+        Collection<Node> sliceOnly = new HashSet<Node>();
+        sliceOnly.addAll(sliceSub);
         intersection.addAll(slice);
         intersection.retainAll(sliceSub);
         tp = tp + intersection.size();
         sliceSub.removeAll(slice);
         fp = fp + sliceSub.size();
-        slice.removeAll(sliceSub);
+        slice.removeAll(sliceOnly);
         fn = fn + slice.size();
 
         double precision = tp / (tp + fp);
