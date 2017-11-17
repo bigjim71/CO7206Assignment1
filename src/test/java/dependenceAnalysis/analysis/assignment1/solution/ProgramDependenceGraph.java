@@ -217,10 +217,13 @@ public class ProgramDependenceGraph extends Analysis {
             otherSlices.addAll(slices);
             otherSlices.remove(slice);
             for(Node n : slice){
+                boolean unique = true;
                 for(Collection<Node> otherSlice : otherSlices){
                     if(otherSlice.contains(n))
-                        uniqueForSlice++;
+                        unique = false;
                 }
+                if(unique)
+                    uniqueForSlice++;
             }
             uniqueTotal +=uniqueForSlice;
         }
