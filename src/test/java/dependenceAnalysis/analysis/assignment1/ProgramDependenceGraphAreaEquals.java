@@ -90,7 +90,7 @@ public class ProgramDependenceGraphAreaEquals {
         for(Node n : solution.getNodes()){
             Collection<Node> slice = pdgSol.backwardSlice(n);
             Collection<Node> sliceSub = new HashSet<Node>();
-            if(!submission.getNodes().contains(n)) {
+            if(submission.getNodes().contains(n)) {
                 try {
                     sliceSub = pdg.backwardSlice(n);
                 }
@@ -110,6 +110,13 @@ public class ProgramDependenceGraphAreaEquals {
         double precision = tp / (tp + fp);
         double recall = tp / (tp + fn);
         System.out.println("Slices: Precision - "+precision+", Recall - "+recall+", Exceptions: "+exceptions);
+    }
+
+    @Test
+    public void testOverlap(){
+        double solOverlap = pdgSol.computeOverlap();
+        double subOverlab = pdg.computeOverlap();
+        System.out.println("Overlap: Solution: "+solOverlap+", Submission: "+subOverlab+" (Difference: )"+Math.abs(solOverlap-subOverlab));
     }
 
     private void writeToFile(Graph submission, String name) {
