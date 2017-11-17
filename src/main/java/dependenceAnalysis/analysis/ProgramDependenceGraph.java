@@ -151,7 +151,8 @@ public class ProgramDependenceGraph extends Analysis {
             this.computeResult();
         HashSet<Node> slice = new HashSet<Node>();
         slice.add(node);
-        return transitivePredecessors(node,slice);
+        slice.addAll(transitivePredecessors(node,slice));
+        return slice;
     }
 
     private Set<Node> transitivePredecessors(Node m, Set<Node> done){
