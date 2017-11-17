@@ -137,14 +137,16 @@ public class ProgramDependenceGraphAreaEquals {
             }
         }
         Collection<Node> intersection = new HashSet<Node>();
-        Collection<Node> sliceOnly = new HashSet<Node>();
-        sliceOnly.addAll(sliceSub);
+        Collection<Node> subOnly = new HashSet<Node>();
+        Collection<Node> correctSliceOnly = new HashSet<Node>();
+        subOnly.addAll(sliceSub);
+        correctSliceOnly.addAll(slice);
         intersection.addAll(slice);
         intersection.retainAll(sliceSub);
         tp = tp + intersection.size();
         sliceSub.removeAll(slice);
         fp = fp + sliceSub.size();
-        slice.removeAll(sliceOnly);
+        slice.removeAll(subOnly);
         fn = fn + slice.size();
 
         double precision = tp / (tp + fp);
@@ -152,13 +154,13 @@ public class ProgramDependenceGraphAreaEquals {
         System.out.println("Big slice: Precision - "+precision+", Recall - "+recall+", Exceptions: "+exceptions);
         if(precision < 1D || recall < 1D){
             System.out.println("Correct solution contained: ");
-            for(Node sol : slice){
+            for(Node sol : correctSliceOnly){
                 System.out.print(sol+", ");
             }
             System.out.println();
 
             System.out.println("Your solution contained: ");
-            for(Node sol : sliceOnly){
+            for(Node sol : subOnly){
                 System.out.print(sol+", ");
             }
             System.out.println();
